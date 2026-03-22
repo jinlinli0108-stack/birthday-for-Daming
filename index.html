@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>祝你生日快乐 - 投篮小游戏</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    overflow: hidden;
+    background:#1a1a1a;
+  }
+
+  #game {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #222, #000);
+  }
+
+  .backboard {
+    width: 180px;
+    height: 120px;
+    background: white;
+    border: 4px solid #333;
+    position: absolute;
+    top: 12vh;
+    border-radius: 6px;
+  }
+
+  .stand {
+    width: 10px;
+    height: 220px;
+    background: #333;
+    position: absolute;
+    top: 24vh;
+  }
+  .stand-bottom {
+    width: 120px;
+    height: 10px;
+    background: #333;
+    position: absolute;
+    top: calc(24vh + 220px);
+  }
+
+  .basket {
+    width: 120px;
+    height: 10px;
+    background: #ff5500;
+    border-radius: 5px;
+    position: absolute;
+    top: 22vh;
+    z-index: 2;
+  }
+  .net {
+    width: 80px;
+    height: 70px;
+    position: absolute;
+    top: 23vh;
+    left: calc(50% - 40px);
+    border-left: 2px dashed white;
+    border-right: 2px dashed white;
+    border-bottom: 2px dashed white;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    z-index: 1;
+  }
+
+  #ball {
+    width: 60px;
+    height: 60px;
+    background: #ff8800;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 20vh;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.18);
+    z-index: 5;
+    box-shadow: 0 0 12px rgba(255,130,0,0.6);
+  }
+  #ball::before {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3.5px solid #333;
+    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+  }
+  #ball::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border-top: 3.5px solid #333;
+    transform: rotate(45deg);
+  }
+
+  #ball.shoot {
+    transform: translateY(-60vh) rotate(720deg);
+    opacity: 0;
+  }
+
+  #birthday {
+    width: 100vw;
+    height: 100vh;
+    background: #ff2a2a;
+    color: white;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 38px;
+    text-shadow: 0 0 15px rgba(255,255,255,0.8);
+  }
+  #birthday h1 {
+    margin-bottom: 35px;
+    font-weight: bold;
+  }
+  #restartBtn {
+    padding: 16px 36px;
+    font-size: 22px;
+    border: none;
+    border-radius: 12px;
+    background: white;
+    color: #ff2a2a;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  #restartBtn:active {
+    transform: scale(0.96);
+  }
+</style>
+</head>
+<body>
+<div id="game">
+  <div class="backboard"></div>
+  <div class="stand"></div>
+  <div class="stand-bottom"></div>
+  <div class="basket"></div>
+  <div class="net"></div>
+  <div id="ball"></div>
+</div>
+<div id="birthday">
+  <h1>祝你生日快乐</h1>
+  <button id="restartBtn">再来一次</button>
+</div>
+<script>
+  const ball = document.getElementById('ball');
+  const game = document.getElementById('game');
+  const birthday = document.getElementById('birthday');
+  const restartBtn = document.getElementById('restartBtn');
+
+  ball.onclick = function () {
+    ball.classList.add('shoot');
+    setTimeout(() => {
+      game.style.display = 'none';
+      birthday.style.display = 'flex';
+    }, 600);
+  };
+
+  restartBtn.onclick = function () {
+    ball.classList.remove('shoot');
+    birthday.style.display = 'none';
+    game.style.display = 'flex';
+  };
+</script>
+</body>
+</html>
